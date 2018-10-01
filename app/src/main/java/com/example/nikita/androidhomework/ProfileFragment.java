@@ -12,6 +12,11 @@ public class ProfileFragment extends Fragment {
     public TextView tvName;
     public TextView tvEmail;
 
+	public static Fragment newInstance() {
+        ProfileFragment myFragment = new ProfileFragment();
+        return myFragment;
+    }
+	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -25,11 +30,5 @@ public class ProfileFragment extends Fragment {
             dialog.show(getFragmentManager(), "dialog");
         });
         return view;
-    }
-
-    public static Fragment newInstance()
-    {
-        ProfileFragment myFragment = new ProfileFragment();
-        return myFragment;
     }
 }
