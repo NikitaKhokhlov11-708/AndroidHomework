@@ -14,4 +14,10 @@ public class SlideshowFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_slideshow, container, false);
         return view;
     }
+
+    public static Fragment newInstance()
+    {
+        SlideshowFragment myFragment = new SlideshowFragment();
+        return myFragment;
+    }
 }

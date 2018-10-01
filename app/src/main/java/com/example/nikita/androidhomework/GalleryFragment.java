@@ -14,4 +14,10 @@ public class GalleryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
         return view;
     }
+
+    public static Fragment newInstance()
+    {
+        GalleryFragment myFragment = new GalleryFragment();
+        return myFragment;
+    }
 }

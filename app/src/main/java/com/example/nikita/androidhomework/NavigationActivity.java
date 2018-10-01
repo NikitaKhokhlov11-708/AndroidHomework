@@ -1,9 +1,8 @@
 package com.example.nikita.androidhomework;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,12 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.TextView;
+
 
 public class NavigationActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
-    android.app.FragmentTransaction fTrans;
+        implements NavigationView.OnNavigationItemSelectedListener, EditFragment.OnFieldsFill {
+    public static String name = "Name";
+    public static String email = "email@google.com";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,15 +24,6 @@ public class NavigationActivity extends AppCompatActivity
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -81,20 +72,40 @@ public class NavigationActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Fragment frag = new Fragment();
 
-        if (id == R.id.nav_gallery) {
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.main_layout, new GalleryFragment())
-                    .commit();
+        switch (id) {
+            case R.id.nav_gallery:
+                frag = GalleryFragment.newInstance();
+                break;
 
-        } else if (id == R.id.nav_slideshow) {
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.main_layout, new SlideshowFragment())
-                    .commit();
+            case R.id.nav_slideshow:
+                frag = SlideshowFragment.newInstance();
+                break;
+            case R.id.nav_profile:
+                frag = ProfileFragment.newInstance();
+                break;
         }
+
+        getFragmentManager().beginTransaction()
+                    .replace(R.id.main_layout, frag)
+                    .commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onOkClick(String email, String login) {
+        this.name = login;
+        this.email = email;
+        TextView tvName = findViewById(R.id.tv_login);
+        tvName.setText(login);
+        TextView tvEmail = findViewById(R.id.tv_email);
+        tvEmail.setText(email);
+        getFragmentManager().beginTransaction()
+                .replace(R.id.main_layout, new ProfileFragment())
+                .commit();
     }
 }
