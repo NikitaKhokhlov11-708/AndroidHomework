@@ -3,12 +3,13 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="16dp">
+
     <ImageView
         android:id="@+id/iv_photo"
-        android:layout_marginRight="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_width="100dp"
-        android:layout_height="100dp" />
+        android:layout_height="100dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp" />
 
     <TextView
         android:id="@+id/tv_name"

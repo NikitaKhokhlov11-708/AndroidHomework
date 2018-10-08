@@ -17,7 +17,6 @@ public class MealsHolder extends RecyclerView.ViewHolder {
     TextView tvName;
     ImageView ivPhoto;
 
-
     MealsHolder(View itemView) {
         super(itemView);
         tvName = itemView.findViewById(R.id.tv_name);
