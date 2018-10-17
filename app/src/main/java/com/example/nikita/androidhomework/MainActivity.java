@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        Intent intent = getIntent();
                         switch (item.getItemId()) {
                             case R.id.action_favorites:
                                 RecyclerFragment fragment = new RecyclerFragment();
@@ -37,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 
                             case R.id.action_music:
                         }
-                        startActivity(intent);
                         return true;
                     }
                 });

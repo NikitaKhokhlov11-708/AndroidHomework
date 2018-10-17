@@ -1,6 +1,5 @@
 package com.example.nikita.androidhomework;
 
-import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 
 import java.util.List;
@@ -37,12 +36,5 @@ public class DiffCallback extends DiffUtil.Callback {
         final Character newEmployee = mNewEmployeeList.get(newItemPosition);
 
         return oldEmployee.name.equals(newEmployee.name);
-    }
-
-    @Nullable
-    @Override
-    public Object getChangePayload(int oldItemPosition, int newItemPosition) {
-        // Implement method if you're going to use ItemAnimator
-        return super.getChangePayload(oldItemPosition, newItemPosition);
     }
 }

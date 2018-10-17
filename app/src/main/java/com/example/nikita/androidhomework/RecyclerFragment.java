@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class RecyclerFragment extends Fragment {
 
@@ -29,11 +30,6 @@ public class RecyclerFragment extends Fragment {
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -55,15 +51,7 @@ public class RecyclerFragment extends Fragment {
                 DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         mRecyclerView.addItemDecoration(itemDecoration);
 
-        final ArrayList<Character> charsList = new ArrayList<>();
-        RecyclerView.Adapter mAdapter = new CharactersAdapter(charsList);
-
-        charsList.add(new Character("Джайна Праудмур", "Могущественная волшебница", 0));
-        charsList.add(new Character("Артас Менетил", "Защитник Нер'зула, Король Лордерона, Король-лич", 1));
-        charsList.add(new Character("Тралл", "Освободитель Орков, Повелитель Кланов", 2));
-        charsList.add(new Character("Утер Светоносный", "Первый Паладин, Великий Мастер Серебряной Длани", 3));
-        charsList.add(new Character("Кел'Тузад", "Верховный лич, Лич Лорд Чумных земель, Повелитель Наксрамаса", 4));
-        charsList.add(new Character("Сильвана Ветрокрылая", "Королева банши", 5));
+        fillArrayList();
 
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -87,24 +75,31 @@ public class RecyclerFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.item2) {
-            for (int i = 0; i < charsList.size() - 1; i++) {
-                Character p = charsList.get(i);
-                Character next = charsList.get(i + 1);
-                if (p.id > next.id) {
-                    Character temp = p;
-                    p = next;
-                    next = temp;
-                }
-            }
-            mAdapter.updateList(new ArrayList<Character>());
+        switch (item.getItemId()) {
+            case R.id.action_sort_by_id:
+                Collections.sort(charsList, Character.CharIDComparator);
+                mAdapter.updateList(new ArrayList<Character>());
+                return true;
 
-            return true;
+            case R.id.action_sort_by_name:
+                Collections.sort(charsList, Character.CharNameComparator);
+                mAdapter.updateList(new ArrayList<Character>());
+                return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void fillArrayList(){
+        charsList.add(new Character("Джайна Праудмур", "Могущественная волшебница", 0));
+        charsList.add(new Character("Артас Менетил", "Защитник Нер'зула, Король Лордерона, Король-лич", 1));
+        charsList.add(new Character("Тралл", "Освободитель Орков, Повелитель Кланов", 2));
+        charsList.add(new Character("Утер Светоносный", "Первый Паладин, Великий Мастер Серебряной Длани", 3));
+        charsList.add(new Character("Кел'Тузад", "Верховный лич, Лич Лорд Чумных земель, Повелитель Наксрамаса", 4));
+        charsList.add(new Character("Сильвана Ветрокрылая", "Королева банши", 5));
     }
 }
