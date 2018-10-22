@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">AndroidHomework</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tv_congrat_text">Congratulations!</string>
+    <string name="btn_main_text">Go back</string>
+    <string name="btn_pick_txt">Pick Time</string>
+    <string name="btn_start_text">Start</string>
+    <string name="btn_stop_text">Stop</string>
+    <string name="tv_title_text">Alarm set to</string>
 </resources>
