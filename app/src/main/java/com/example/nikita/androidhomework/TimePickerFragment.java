@@ -2,7 +2,6 @@ package com.example.nikita.androidhomework;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.format.DateFormat;
@@ -13,6 +12,8 @@ import java.util.Calendar;
 
 public class TimePickerFragment extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
+
+    OnFragmentCloseListener mCallback;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -25,9 +26,13 @@ public class TimePickerFragment extends DialogFragment
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        Intent intent = new Intent(getActivity(), MainActivity.class);
-        intent.putExtra("hour", hourOfDay);
-        intent.putExtra("minute", minute);
-        startActivity(intent);
+        Bundle data = new Bundle();
+        data.putInt("hour", hourOfDay);
+        data.putInt("minute", minute);
+        mCallback.onClosed(data);
+    }
+
+    public interface OnFragmentCloseListener {
+        void onClosed(Bundle data);
     }
 }

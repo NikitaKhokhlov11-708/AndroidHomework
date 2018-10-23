@@ -17,21 +17,23 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener,
+        View.OnClickListener,
+        TimePickerFragment.OnFragmentCloseListener {
 
     AlarmManager am;
     int hour;
     int minute;
-    Toast toast;
+    TextView tvTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView tvTime = findViewById(R.id.tv_time);
+        tvTime = findViewById(R.id.tv_time);
         final Calendar c = Calendar.getInstance();
-        hour = getIntent().getIntExtra("hour", c.get(Calendar.HOUR_OF_DAY));
-        minute = getIntent().getIntExtra("minute", c.get(Calendar.MINUTE));
+        hour = c.get(Calendar.HOUR_OF_DAY);
+        minute = c.get(Calendar.MINUTE);
         tvTime.setText(hour + ":" + minute);
         am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
@@ -71,23 +73,27 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
         newCal.set(Calendar.HOUR_OF_DAY, hour);
         newCal.set(Calendar.MINUTE, minute);
         newCal.set(Calendar.SECOND, 0);
-        Intent intent = new Intent(this, TimeNotification.class);
+        Intent intent = new Intent(this, TimeReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
                 intent, PendingIntent.FLAG_CANCEL_CURRENT);
         am.cancel(pendingIntent);
         am.set(AlarmManager.RTC_WAKEUP,
                 newCal.getTimeInMillis(),
                 pendingIntent);
-        toast = Toast.makeText(this, "Будильник запущен!", Toast.LENGTH_SHORT);
-        toast.show();
+        Toast.makeText(this, "Будильник запущен!", Toast.LENGTH_SHORT).show();
     }
 
     public void stopNotify() {
-        Intent intent = new Intent(this, TimeNotification.class);
+        Intent intent = new Intent(this, TimeReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
                 intent, PendingIntent.FLAG_CANCEL_CURRENT);
         am.cancel(pendingIntent);
-        toast = Toast.makeText(this, "Будильник отменен!", Toast.LENGTH_SHORT);
-        toast.show();
+        Toast.makeText(this, "Будильник отменен!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onClosed(Bundle data) {
+        hour = data.getInt("hour");
+        minute = data.getInt("minute");
+        tvTime.setText(hour + ":" + minute);
     }
 }

@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".TimeNotification" />
+        <receiver android:name=".TimeReceiver" />
 
         <activity android:name=".WakeUpActivity"></activity>
     </application>
