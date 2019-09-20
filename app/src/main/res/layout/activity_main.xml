@@ -7,6 +7,7 @@
     android:layout_height="48sp"
     android:background="@drawable/googlepay_button_no_shadow_background"
     android:padding="2sp"
+    android:layout_margin="8dp"
     android:contentDescription="@string/buy_with_googlepay_button_content_description"
     tools:context=".MainActivity">
 
